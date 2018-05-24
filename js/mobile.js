@@ -41,12 +41,13 @@ define([], function(){
         var friendsStr = $friends?'<span class="viewer-title">'+ menuList("friends") + '</span><div class="viewer-div friends" id="js-mobile-friends"></div>':"";
         var aboutmeStr = $aboutme?'<span class="viewer-title">'+ menuList("about") + '</span><div class="viewer-div aboutme" id="js-mobile-aboutme"></div>':"";
 
-        $viewer.innerHTML = '<div id="viewer-box">\
-        <div class="viewer-box-l">\
-            <div class="viewer-box-wrap">'+aboutmeStr+friendsStr+tagStr+'</div>\
-        </div>\
-        <div class="viewer-box-r"></div>\
-        </div>';
+        $viewer.innerHTML = ''
+        // = '<div id="viewer-box">\
+        // <div class="viewer-box-l">\
+        //     <div class="viewer-box-wrap">'+aboutmeStr+friendsStr+tagStr+'</div>\
+        // </div>\
+        // <div class="viewer-box-r"></div>\
+        // </div>';
 
         //主要图片节点
         document.getElementsByTagName("body")[0].appendChild($viewer);

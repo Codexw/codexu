@@ -35,7 +35,7 @@
 
 
 
-    <link rel="shortcut icon" href="/bitbug_favicon">
+    <link rel="shortcut icon" href="/favicon.png">
 
 
 
@@ -74,12 +74,14 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: false
+        search: true
     }
 </script>
 
 
-    <script> yiliaConfig.jquery_ui = [false]; </script>
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
 
 
 
@@ -106,6 +108,13 @@
 
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -163,18 +172,16 @@
                         
                             <li><a href="/tags/">标签云</a></li>
                         
-                            <li><a href="/about/">关于我</a></li>
-                        
                         </ul>
                     </nav>
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                                <a class="fa Email" href="#" title="Email"></a>
                             
                                 <a class="fa GitHub" href="#" title="GitHub"></a>
                             
-                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                                <a class="fa QQ" href="#" title="QQ"></a>
                             
                         </ul>
                     </nav>
@@ -192,11 +199,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                      <a class="main-nav-link switch-friends-link" href="http://www.codexu.xin">Codexu</a>
                     
                     </div>
                 </section>
@@ -206,7 +209,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">专注于前端</div>
+                    <div id="js-aboutme">爱技术，爱自由，爱生活</div>
                 </section>
                 
             </div>
@@ -239,19 +242,17 @@
                 
                     <li><a href="/tags/">标签云</a></li>
                 
-                    <li><a href="/about/">关于我</a></li>
-                
                 <div class="clearfix"></div>
                 </ul>
             </nav>
             <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                                <a class="fa Email" target="_blank" href="#" title="Email"></a>
                             
                                 <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
                             
-                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                                <a class="fa QQ" target="_blank" href="#" title="QQ"></a>
                             
                         </ul>
             </nav>
@@ -304,7 +305,7 @@
       
           
         <p>ButterKnife 8.1<br><a id="more"></a></p>
-<p>项目地址：<a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">https://github.com/JakeWharton/butterknife</a><br>AS插件：Android Butterknife Zelezny</p>
+<p>项目地址：<a href="https://github.com/JakeWharton/butterknife">https://github.com/JakeWharton/butterknife</a><br>AS插件：Android Butterknife Zelezny</p>
 <p>#一、优点<br>1） 强大的View绑定和Click事件处理功能，简化代码，提升开发效率 </p>
 <p>2）方便的处理Adaper里的ViewHolder绑定问题 </p>
 <p>3） 运行时不会影响app效率，使用配置方便 </p>
@@ -468,12 +469,12 @@
     
         <div class="bdsharebuttonbox">
             <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
             <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
             <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
             <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+            <!-- <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a> -->
+            <!-- <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a> -->
+            <!-- <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> -->
         </div>
         <script>
             window._bd_share_config={
@@ -585,29 +586,31 @@
 <script>
     // Open in New Window
     
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
+        $("a[target=_blank]").removeAttr("target");
     
 </script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏起来啦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你抓到啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
   </div>
   <script type="text/javascript" src="/js/love.js"></script>
   
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":0,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@latest/assets/haruto.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":40,"vOffset":-15},"react":{"opacityDefault":0.5,"opacityOnHover":0.2},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":0.5,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@latest/assets/haruto.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":40,"vOffset":-15},"react":{"opacityDefault":0.5,"opacityOnHover":0.2},"mobile":{"show":false},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
 </html>
