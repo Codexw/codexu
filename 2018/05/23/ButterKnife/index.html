@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Codexu" />
+
+
+
+<meta name="description" content="ButterKnife 8.1">
+<meta name="keywords" content="Android,tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ButterKnife">
+<meta property="og:url" content="http://yoursite.com/2018/05/23/ButterKnife/index.html">
+<meta property="og:site_name" content="Codexu">
+<meta property="og:description" content="ButterKnife 8.1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-23T16:00:15.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ButterKnife">
+<meta name="twitter:description" content="ButterKnife 8.1">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Codexu" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/bitbug_favicon">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>ButterKnife | Codexu</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Codexu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-World/">Hello World</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Codexu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Codexu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-ButterKnife" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/23/ButterKnife/" class="article-date">
+      <time datetime="2018-05-23T14:36:03.000Z" itemprop="datePublished">2018-05-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ButterKnife
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>ButterKnife 8.1<br><a id="more"></a></p>
+<p>项目地址：<a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">https://github.com/JakeWharton/butterknife</a><br>AS插件：Android Butterknife Zelezny</p>
+<p>#一、优点<br>1） 强大的View绑定和Click事件处理功能，简化代码，提升开发效率 </p>
+<p>2）方便的处理Adaper里的ViewHolder绑定问题 </p>
+<p>3） 运行时不会影响app效率，使用配置方便 </p>
+<p>4）代码清晰，可读性强</p>
+<p>###二、添加依赖<br>在module的build.gradle 文件中的dependencies标签中添加代码如下（导入库的依赖）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;  </span><br><span class="line">  compile &apos;com.jakewharton:butterknife:8.8.1&apos;  </span><br><span class="line">  annotationProcessor &apos;com.jakewharton:butterknife-compiler:8.8.1&apos;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在module的build.gradle 文件中设置支持插件 ，添加如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.library&apos;  </span><br><span class="line">apply plugin: &apos;com.jakewharton.butterknife&apos;</span><br></pre></td></tr></table></figure></p>
+<p><code>（注：这条是开发者给出的配置，目前不加此配置也是不影响正常使用的，但小区别还是有的（eg：R2.id.XXX能否正常使用），是否作此配置看使用者自己吧，本人建议加此配置。）</code></p>
+<p>#三、Butter Knife的注册</p>
+<p>#####1.使用注意事项</p>
+<ol>
+<li><p>在Activity 类中绑定 ：ButterKnife.bind(this);必须在setContentView();之后绑定；且父类bind绑定后，子类不需要再bind。</p>
+</li>
+<li><p>在非Activity 类（eg：Fragment、ViewHold）中绑定：ButterKnife.bind(this，view);</p>
+</li>
+</ol>
+<p>这里的this不能替换成getActivity（）。</p>
+<ol start="3">
+<li><p>在Activity中不需要做解绑操作，在Fragment 中必须在onDestroyView()中做解绑操作。</p>
+</li>
+<li><p>使用ButterKnife修饰的方法和控件，不能用private or static 修饰，否则会报错。</p>
+</li>
+<li><p>setContentView()不能通过注解实现。（其他的有些注解框架可以）</p>
+</li>
+<li><p>使用Activity为根视图绑定任意对象时，如果你使用类似MVC的设计模式你可以在Activity 调用ButterKnife.bind(this, activity)，来绑定Controller。</p>
+</li>
+<li><p>使用ButterKnife.bind(this，view)绑定一个view的子节点字段。如果你在子View的布局里或者自定义view的构造方法里 使用了inflate,你可以立刻调用此方法。或者，从XML inflate来的自定义view类型可以在onFinishInflate回调方法中使用它。</p>
+</li>
+</ol>
+<p>#####2.在Activity中绑定ButterKnife<br>使用：ButterKnife.bind(this);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends Activity&#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_main);  </span><br><span class="line">        //绑定初始化ButterKnife  </span><br><span class="line">        ButterKnife.bind(this);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#####3.在Fragment中绑定ButterKnife<br>使用：ButterKnife.bind(this, view);</p>
+<p>Fragment的生命周期不同于activity。在onCreateView中绑定一个Fragment时，在onDestroyView中将视图设置为null。</p>
+<p>当你调用bind来为你绑定一个Fragment时,Butter Knife会返回一个Unbinder的实例。</p>
+<p>在适当的生命周期（onDestroyView）回调中调用它的unbind方法进行Fragment解绑。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeFragment extends Fragment&#123;  </span><br><span class="line">    private Unbinder unbinder;  </span><br><span class="line">    @Override  </span><br><span class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container,  </span><br><span class="line">                             Bundle savedInstanceState) &#123;  </span><br><span class="line">        View view = inflater.inflate(R.layout.fragment, container, false);  </span><br><span class="line">        //返回一个Unbinder值（进行解绑），注意这里的this不能使用getActivity()  </span><br><span class="line">        unbinder = ButterKnife.bind(this, view);  </span><br><span class="line">        return view;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * onDestroyView中进行解绑操作 </span><br><span class="line">     */  </span><br><span class="line">    @Override  </span><br><span class="line">    public void onDestroyView() &#123;  </span><br><span class="line">        super.onDestroyView();  </span><br><span class="line">        unbinder.unbind();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#####4.在Adapter中绑定ButterKnife<br>使用：ButterKnife.bind(this, view);</p>
+<p>在Adapter的ViewHolder中使用，将ViewHolder加一个构造方法，在new ViewHolder的时候把view传递进去。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class MyAdapter extends BaseAdapter &#123;  </span><br><span class="line">    // 部分代码省略...  </span><br><span class="line">  </span><br><span class="line">  @Override   </span><br><span class="line">  public View getView(int position, View view, ViewGroup parent) &#123;  </span><br><span class="line">    ViewHolder holder;  </span><br><span class="line">    if (view != null) &#123;  </span><br><span class="line">      holder = (ViewHolder) view.getTag();  </span><br><span class="line">    &#125; else &#123;  </span><br><span class="line">      view = inflater.inflate(R.layout.testlayout, parent, false);  </span><br><span class="line">      holder = new ViewHolder(view);  </span><br><span class="line">      view.setTag(holder);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    holder.name.setText(&quot;诺诺&quot;);  </span><br><span class="line">    // etc...  </span><br><span class="line">  </span><br><span class="line">    return view;  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  static class ViewHolder &#123;  </span><br><span class="line">    @BindView(R.id.title) TextView name;  </span><br><span class="line">    @BindView(R.id.job_title) TextView jobTitle;  </span><br><span class="line">  </span><br><span class="line">    public ViewHolder(View view) &#123;  </span><br><span class="line">      ButterKnife.bind(this, view);  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#四、Butter Knife的使用</p>
+<p>#####1.使用注意事项<br>1）ButterKinfe的注解标签因版本不同而有所变化。8.0.0之前的Bind标签在8.0.0之后变成了BindView，</p>
+<p>而8.7.0之后在绑定view时，要用R2.id.XXX，而不再是常用的R.id.XXX。</p>
+<p>Note：我在实际使用时用R.id.XXX和R2.id.XXX都可以，目前本人并未发现有什么异常。自动生成代码时是R.id.XXX；建议使用R2.id.XXX。因为网上都说使用R2是因为library中的R字段的id值不是final类型的，但是你的应用module中确是final类型的……</p>
+<p>2）默认情况下，@bind和 listener 的绑定是必需的。如果无法找到目标视图，将抛出一个异常。<br>要抑制此行为并创建可选绑定，可以将@Nullable注解添加到字段中，或将@Optional注解添加到方法。</p>
+<p>Note:任何被命名为@Nullable的注解都可以用于成员变量。鼓励使用Android的”support-annotations”库中的@Nullable注解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Nullable  </span><br><span class="line">@BindView(R.id.might_not_be_there)   </span><br><span class="line">TextView mightNotBeThere;  </span><br><span class="line">  </span><br><span class="line">@Optional  </span><br><span class="line">@OnClick(R.id.maybe_missing)   </span><br><span class="line">public void onMaybeMissingClicked() &#123;  </span><br><span class="line">    // TODO ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#####2.绑定注解<br>@BindView—-&gt;绑定一个view；id为一个view 变量</p>
+<p>@BindViews  —-&gt;<br> 绑定多个view；id为一个view的list变量</p>
+<p>@BindArray—-&gt;<br> 绑定string里面array数组；@BindArray(R.array.city ) String[] citys ;</p>
+<p>@BindBitmap—-&gt;绑定图片资源为Bitmap；@BindBitmap(<br> R.mipmap.wifi ) Bitmap bitmap;</p>
+<p>@BindBool —-&gt;绑定boolean值</p>
+<p>@BindColor —-&gt;绑定color；@BindColor(R.color.colorAccent)<br> int black;</p>
+<p>@BindDimen —-&gt;绑定Dimen；@BindDimen(R.dimen.borth_width)<br> int mBorderWidth;</p>
+<p>@BindDrawable<br>—-&gt; 绑定Drawable；@BindDrawable(R.drawable.test_pic) Drawable mTestPic;</p>
+<p>@BindFloat —-&gt;绑定float</p>
+<p>@BindInt —-&gt;绑定int</p>
+<p>@BindString —-&gt;绑定一个String id为一个String变量；@BindString(<br> R.string.app_name ) String meg;</p>
+<p>#####3.事件注解<br>(注：此处作个统计，后面会有详细解释)</p>
+<p>@OnClick—-&gt;点击事件<br>@OnCheckedChanged —-&gt;选中，取消选中<br>@OnEditorAction —-&gt;软键盘的功能键<br>@OnFocusChange —-&gt;焦点改变<br>@OnItemClick item—-&gt;被点击(注意这里有坑，如果item里面有Button等这些有点击的控件事件的，需要设置这些控件属性focusable为false)<br>@OnItemLongClick item—-&gt;长按(返回真可以拦截onItemClick)<br>@OnItemSelected —-&gt;item被选择事件<br>@OnLongClick —-&gt;长按事件<br>@OnPageChange —-&gt;页面改变事件<br>@OnTextChanged —-&gt;EditText里面的文本变化事件<br>@OnTouch —-&gt;触摸事件<br>@Optional —-&gt;</p>
+<p>选择性注入，如果当前对象不存在，就会抛出一个异常，为了压制这个异常，可以在变量或者方法上加入一下注解,让注入变成选择性的,如果目标View存在,则注入, 不存在,则什么事情都不做=如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Optional  </span><br><span class="line">@OnCheckedChanged(R.id.cb_test)  </span><br><span class="line">public void onCheckedChanged(CompoundButton buttonView,boolean isChecked)&#123;  </span><br><span class="line">    if(isChecked)&#123;  </span><br><span class="line">        tvTest.setText(&quot;被选中...&quot;);  </span><br><span class="line">    &#125;else&#123;  </span><br><span class="line">        tvTest.setText(&quot;被取消...&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#####4.绑定view</p>
+<p>1）@BindView() : 布局id 注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@BindView( R2.id.button)  </span><br><span class="line">public Button button;</span><br></pre></td></tr></table></figure>
+<p>2）@BindViews(): 布局内多个控件 id 注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindViews(&#123; R2.id.button1, R2.id.button2,  R2.id.button3&#125;)  </span><br><span class="line">    public List&lt;Button&gt; buttonList ;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_main);  </span><br><span class="line">  </span><br><span class="line">        ButterKnife.bind(this);  </span><br><span class="line">  </span><br><span class="line">        buttonList.get( 0 ).setText( &quot;hello 1 &quot;);  </span><br><span class="line">        buttonList.get( 1 ).setText( &quot;hello 2 &quot;);  </span><br><span class="line">        buttonList.get( 2 ).setText( &quot;hello 3 &quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#####5.绑定资源<br>1）@BindString() ：绑定string 字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindView(R2.id.button) //绑定button 控件  </span><br><span class="line">    public Button button ;  </span><br><span class="line">  </span><br><span class="line">    @BindString(R2.string.app_name)  //绑定资源文件中string字符串  </span><br><span class="line">    String str;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">        button.setText( str );  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2）@BindArray() : 绑定string里面array数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;  </span><br><span class="line">    &lt;string name=&quot;app_name&quot;&gt;城市&lt;/string&gt;  </span><br><span class="line">  </span><br><span class="line">    &lt;string-array name=&quot;city&quot;&gt;  </span><br><span class="line">        &lt;item&gt;北京市&lt;/item&gt;  </span><br><span class="line">        &lt;item&gt;天津市&lt;/item&gt;  </span><br><span class="line">        &lt;item&gt;哈尔滨市&lt;/item&gt;  </span><br><span class="line">        &lt;item&gt;大连市&lt;/item&gt;  </span><br><span class="line">        &lt;item&gt;香港市&lt;/item&gt;  </span><br><span class="line">    &lt;/string-array&gt;  </span><br><span class="line">  </span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindView(R2.id.button) //绑定button 控件  </span><br><span class="line">    public Button button ;  </span><br><span class="line">  </span><br><span class="line">    @BindString(R2.string.app_name)  //绑定资源文件中string字符串  </span><br><span class="line">    String str;  </span><br><span class="line">  </span><br><span class="line">    @BindArray(R2.array.city)  //绑定string里面array数组  </span><br><span class="line">    String [] citys ;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">        button.setText(citys[0]);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3）@BindBitmap( ) : 绑定Bitmap 资源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindView( R2.id.imageView ) //绑定ImageView 控件  </span><br><span class="line">    public ImageView imageView ;  </span><br><span class="line">  </span><br><span class="line">    @BindBitmap(R2.drawable.bm)//绑定Bitmap 资源  </span><br><span class="line">    public Bitmap bitmap ;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">  </span><br><span class="line">        imageView.setImageBitmap(bitmap);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>这里的图片资源引用存在一个小问题：drawable文件夹下的图片使用R或R2引用都没问题；但是mipmap文件夹下的图片资源引用目前只能使用R。</code><br>4）@BindColor( ) : 绑定一个颜色值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindView( R2.id.button)  //绑定一个控件  </span><br><span class="line">    public Button button;  </span><br><span class="line">  </span><br><span class="line">    @BindColor( R2.color.colorAccent ) //具体色值在color文件中  </span><br><span class="line">    int black ;  //绑定一个颜色值  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">  </span><br><span class="line">        button.setTextColor(  black );  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="7-点击事件绑定"><a href="#7-点击事件绑定" class="headerlink" title="7.点击事件绑定"></a>7.点击事件绑定</h3><blockquote>
+<p>不用声明view，不用setOnClickLisener（）就可以绑定点击事件</p>
+</blockquote>
+<p>1）绑定事件</p>
+<p>@OnClick( ) : 绑定控件点击事件<br>@OnLongClick( ) ： 绑定控件长按事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @OnClick(R2.id.button1 )   //给 button1 设置一个点击事件  </span><br><span class="line">    public void showToast()&#123;  </span><br><span class="line">        Toast.makeText(this, &quot;is a click&quot;, Toast.LENGTH_SHORT).show();  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    @OnLongClick( R2.id.button1 )    //给 button1 设置一个长按事件  </span><br><span class="line">    public boolean showToast2()&#123;  </span><br><span class="line">        Toast.makeText(this, &quot;is a long click&quot;, Toast.LENGTH_SHORT).show();  </span><br><span class="line">        return true ;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2）指定多个id绑定事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    //提示：这是可以自动生成的，大家不要什么都手动敲哦  </span><br><span class="line">    @OnClick(&#123;R.id.ll_product_name, R.id.ll_product_lilv, R.id.ll_product_qixian, R.id.ll_product_repayment_methods&#125;)  </span><br><span class="line">    public void onViewClicked(View view) &#123;  </span><br><span class="line">        switch (view.getId()) &#123;  </span><br><span class="line">            case R.id.ll_product_name:  </span><br><span class="line">                System.out.print(&quot;我是点击事件1&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            case R.id.ll_product_lilv:  </span><br><span class="line">                System.out.print(&quot;我是点击事件2&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            case R.id.ll_product_qixian:  </span><br><span class="line">                System.out.print(&quot;我是点击事件3&quot;);  </span><br><span class="line">  </span><br><span class="line">                break;  </span><br><span class="line">            case R.id.ll_product_repayment_methods:  </span><br><span class="line">                System.out.print(&quot;我是点击事件4&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>下面是错误的写法，多条点击事件不可以用R2的方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;    </span><br><span class="line">    </span><br><span class="line">    @OnClick(&#123;R2.id.ll_product_name, R2.id.ll_product_lilv, R2.id.ll_product_qixian, R2.id.ll_product_repayment_methods&#125;)    </span><br><span class="line">    public void onViewClicked(View view) &#123;    </span><br><span class="line">        switch (view.getId()) &#123;    </span><br><span class="line">            case R2.id.ll_product_name:    </span><br><span class="line">                System.out.print(&quot;我是点击事件1&quot;);    </span><br><span class="line">                break;    </span><br><span class="line">            case R2.id.ll_product_lilv:    </span><br><span class="line">                System.out.print(&quot;我是点击事件2&quot;);    </span><br><span class="line">                break;    </span><br><span class="line">            case R2.id.ll_product_qixian:    </span><br><span class="line">                System.out.print(&quot;我是点击事件3&quot;);    </span><br><span class="line">    </span><br><span class="line">                break;    </span><br><span class="line">            case R2.id.ll_product_repayment_methods:    </span><br><span class="line">                System.out.print(&quot;我是点击事件4&quot;);    </span><br><span class="line">                break;    </span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    @Override    </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;    </span><br><span class="line">        super.onCreate(savedInstanceState);    </span><br><span class="line">        setContentView(R.layout.activity_butterknife);    </span><br><span class="line">    </span><br><span class="line">        //绑定activity    </span><br><span class="line">        ButterKnife.bind( this ) ;    </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>如果一定要使用R2的写法，可以单一逐次写,下面写法是正确的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;    </span><br><span class="line">    </span><br><span class="line">    @OnClick(R2.id.ll_product_name)    </span><br><span class="line">    public void onViewClicked1(View view) &#123;    </span><br><span class="line">       System.out.print(&quot;我是点击事件1&quot;);               </span><br><span class="line">    &#125;    </span><br><span class="line">    @OnClick(R2.id.ll_product_lilv)    </span><br><span class="line">    public void onViewClicked2(View view) &#123;    </span><br><span class="line">       System.out.print(&quot;我是点击事件2&quot;);     </span><br><span class="line">    &#125;   </span><br><span class="line">    @OnClick(R2.id.ll_product_qixian)    </span><br><span class="line">    public void onViewClicked3(View view) &#123;    </span><br><span class="line">       System.out.print(&quot;我是点击事件3&quot;);               </span><br><span class="line">    &#125;    </span><br><span class="line">    @OnClick(R2.id.ll_product_repayment_methods)    </span><br><span class="line">    public void onViewClicked4(View view) &#123;    </span><br><span class="line">       System.out.print(&quot;我是点击事件4&quot;);               </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    @Override    </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;    </span><br><span class="line">        super.onCreate(savedInstanceState);    </span><br><span class="line">        setContentView(R.layout.activity_butterknife);    </span><br><span class="line">    </span><br><span class="line">        //绑定activity    </span><br><span class="line">        ButterKnife.bind( this ) ;    </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>3）自定义View使用注解事件<br>Note：不用指定id，直接注解OnClick<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class MyButton extends Button &#123;  </span><br><span class="line">  @OnClick  </span><br><span class="line">  public void onClick() &#123;&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#####7.绑定监听<br>1）Listeners可以自动配置到方法中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.submit)  </span><br><span class="line">public void submit(View view) &#123;  </span><br><span class="line">  // TODO submit data to server...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2）对监听器方法的所有参数都是可选的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.submit)  </span><br><span class="line">public void submit() &#123;  </span><br><span class="line">  // TODO submit data to server...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3）定义一个特定类型，它将自动被转换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.submit)  </span><br><span class="line">    public void sayHi(Button button) &#123;//看参数这里的变化就明白了  </span><br><span class="line">      button.setText(&quot;Hello!&quot;);  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>4）在单个绑定中指定多个id，用于公共事件处理。<br>5）自定义视图可以通过不指定ID来绑定到它们自己的监听器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class FancyButton extends Button &#123;  </span><br><span class="line">  @OnClick  </span><br><span class="line">  public void onClick() &#123;  </span><br><span class="line">    // TODO do something!  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>6）Listener中多方法注解<br>方法注解，其对应的监听器有多个回调，可用于绑定到其中任何一个。每个注解都有一个它绑定的默认回调。使用回调参数指定一个替换。</p>
+<p>eg：以Spinner为例<br>原始：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Spinner s=new Spinner(this);  </span><br><span class="line">       //原始方法：Spinner 条目选择监听事件 正常写法  </span><br><span class="line">       s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()&#123;  </span><br><span class="line">           @Override  </span><br><span class="line">           public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) &#123;  </span><br><span class="line">           &#125;  </span><br><span class="line">           @Override  </span><br><span class="line">           public void onNothingSelected(AdapterView&lt;?&gt; parent) &#123;  </span><br><span class="line">           &#125;  </span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注解：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">    /*利用注解对Spinner item  作选择监听事件处理方式*/  </span><br><span class="line">    @OnItemSelected(R.id.my_spiner)//默认callback为ITEM_SELECTED  </span><br><span class="line">    void onItemSelected(int position) &#123;  </span><br><span class="line">        Toast.makeText(this, &quot;position: &quot; + position, Toast.LENGTH_SHORT).show();  </span><br><span class="line">    &#125;  </span><br><span class="line">    /* </span><br><span class="line">    * 注解onNothingSelected，需要在注解参数添加一个callback， </span><br><span class="line">    * 注意的是Spinner中只要有数据,默认都会选中第0个数据,所以想进入到onNothingSelected()方法,就需要把Adapter中的数据都清空 </span><br><span class="line">    */  </span><br><span class="line">    @OnItemSelected(value = R.id.my_spiner, callback = OnItemSelected.Callback.NOTHING_SELECTED)  </span><br><span class="line">    void onNothingSelected() &#123;  </span><br><span class="line">        Toast.makeText(this, &quot;Nothing&quot;, Toast.LENGTH_SHORT).show();  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind( this ) ;  </span><br><span class="line">        Spinner s=new Spinner(this);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>7） @OnCheckedChanged监听的使用<br>原方法应是：setOnCheckedChangeListener()</p>
+<p>在使用注解@OnCheckedChanged的时候，出现了CompoundButton这个参数，因为理解有误，传参有误，还出现了无法转换成CompoundButton的bug。正常使用该注解时，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnCheckedChanged(&#123;R.id.XXX&#125;)  </span><br><span class="line">public void OnCheckedChangeListener(CompoundButton view, boolean ischanged )&#123;  </span><br><span class="line">      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参数是CompoundButton是变化的按钮控件事件id，ischanged是指该控件是否被点击改变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  </span><br><span class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;  </span><br><span class="line">    android:layout_width=&quot;match_parent&quot;  </span><br><span class="line">    android:layout_height=&quot;match_parent&quot;  </span><br><span class="line">    android:orientation=&quot;vertical&quot;&gt;  </span><br><span class="line">  </span><br><span class="line">    &lt;RadioGroup  </span><br><span class="line">        android:id=&quot;@+id/rg_main&quot;  </span><br><span class="line">        android:layout_width=&quot;fill_parent&quot;  </span><br><span class="line">        android:layout_height=&quot;48dp&quot;  </span><br><span class="line">        android:layout_alignParentBottom=&quot;true&quot;  </span><br><span class="line">        android:background=&quot;@color/white&quot;  </span><br><span class="line">        android:orientation=&quot;horizontal&quot;&gt;  </span><br><span class="line">  </span><br><span class="line">        &lt;RadioButton  </span><br><span class="line">            android:id=&quot;@+id/rg_home&quot;  </span><br><span class="line">            android:layout_width=&quot;match_parent&quot;  </span><br><span class="line">            android:layout_height=&quot;match_parent&quot;  </span><br><span class="line">            android:focusable=&quot;false&quot;  </span><br><span class="line">            android:text=&quot;@string/nav_one&quot; /&gt;  </span><br><span class="line">  </span><br><span class="line">        &lt;RadioButton  </span><br><span class="line">            android:id=&quot;@+id/rg_wealth&quot;  </span><br><span class="line">            android:layout_width=&quot;match_parent&quot;  </span><br><span class="line">            android:layout_height=&quot;match_parent&quot;  </span><br><span class="line">            android:focusable=&quot;false&quot;  </span><br><span class="line">            android:text=&quot;@string/nav_two&quot; /&gt;  </span><br><span class="line">  </span><br><span class="line">        &lt;RadioButton  </span><br><span class="line">            android:id=&quot;@+id/rg_account&quot;  </span><br><span class="line">            android:layout_width=&quot;match_parent&quot;  </span><br><span class="line">            android:layout_height=&quot;match_parent&quot;  </span><br><span class="line">            android:focusable=&quot;false&quot;  </span><br><span class="line">            android:text=&quot;@string/nav_four&quot; /&gt;  </span><br><span class="line">    &lt;/RadioGroup&gt;  </span><br><span class="line">  </span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@OnCheckedChanged(&#123;R.id.rg_home,R.id.rg_wealth,R.id.rg_account&#125;)  </span><br><span class="line">    public void OnCheckedChangeListener(CompoundButton view, boolean ischanged )&#123;  </span><br><span class="line">        switch (view.getId()) &#123;  </span><br><span class="line">            case R.id.rg_home:  </span><br><span class="line">                if (ischanged)&#123;//注意：这里一定要有这个判断，只有按钮被点击了，ischanged状态发生改变，才会执行下面的内容  </span><br><span class="line">                    //这里写你的按钮变化状态的UI及相关逻辑  </span><br><span class="line">                &#125;  </span><br><span class="line">                break;  </span><br><span class="line">            case R.id.rg_wealth:  </span><br><span class="line">                if (ischanged) &#123;  </span><br><span class="line">                    //这里写你的按钮变化状态的UI及相关逻辑  </span><br><span class="line">                &#125;  </span><br><span class="line">                break;  </span><br><span class="line">            case R.id.rg_account:  </span><br><span class="line">                if (ischanged) &#123;  </span><br><span class="line">                    //这里写你的按钮变化状态的UI及相关逻辑  </span><br><span class="line">                &#125;  </span><br><span class="line">                break;  </span><br><span class="line">            default:  </span><br><span class="line">                break;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>8）使用findById<br>Butter Knife仍然包含了findById()方法，用于仍需从一个view ，Activity，或者Dialog上初始化view的时候，并且它可以自动转换类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">View view = LayoutInflater.from(context).inflate(R.layout.thing, null);  </span><br><span class="line">TextView firstName = ButterKnife.findById(view, R.id.first_name);  </span><br><span class="line">TextView lastName = ButterKnife.findById(view, R.id.last_name);  </span><br><span class="line">ImageView iv = ButterKnife.findById(view, R.id.iv);</span><br></pre></td></tr></table></figure></p>
+<p>9）设置多个view的属性<br>apply()</p>
+<p>作用：允许您立即对列表中的所有视图进行操作。</p>
+<p>Action和Setter接口</p>
+<p>作用：Action和Setter接口允许指定简单的行为。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class ButterknifeActivity extends AppCompatActivity &#123;  </span><br><span class="line">  </span><br><span class="line">    @BindViews(&#123;R2.id.first_name, R2.id.middle_name, R2.id.last_name&#125;)  </span><br><span class="line">    List&lt;EditText&gt; nameViews;  </span><br><span class="line">  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.activity_butterknife);  </span><br><span class="line">  </span><br><span class="line">        //绑定activity  </span><br><span class="line">        ButterKnife.bind(this);  </span><br><span class="line">        //看不懂的小伙伴，多敲几遍代码，实际操作一下自然就懂了。相信我！如果你重复敲了10遍以上的代码，并认真思考了还没懂，欢迎给我评论留言。  </span><br><span class="line">          </span><br><span class="line">        //设置多个view的属性  </span><br><span class="line">        //方式1：传递值  </span><br><span class="line">        ButterKnife.apply(nameViews, DISABLE);  </span><br><span class="line">        //方式2：指定值  </span><br><span class="line">        ButterKnife.apply(nameViews, ENABLED, false);  </span><br><span class="line">        ////方式3 设置View的Property  </span><br><span class="line">        ButterKnife.apply(nameViews, View.ALPHA, 0.0f);//一个Android属性也可以用于应用的方法。  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /* </span><br><span class="line">    * Action接口设置属性 </span><br><span class="line">    */  </span><br><span class="line">    static final ButterKnife.Action&lt;View&gt; DISABLE = new ButterKnife.Action&lt;View&gt;() &#123;  </span><br><span class="line">        @Override  </span><br><span class="line">        public void apply(View view, int index) &#123;  </span><br><span class="line">            view.setEnabled(false);//目的是使多个view都具备此属性  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;;  </span><br><span class="line">    /* </span><br><span class="line">    * Setter接口设置属性 </span><br><span class="line">    */  </span><br><span class="line">    static final ButterKnife.Setter&lt;View, Boolean&gt; ENABLED = new ButterKnife.Setter&lt;View, Boolean&gt;() &#123;  </span><br><span class="line">        @Override  </span><br><span class="line">        public void set(View view, Boolean value, int index) &#123;  </span><br><span class="line">            view.setEnabled(value);//目的是使多个view都具备此属性，可变boolean值是可以传递的  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#Butter Knife的代码混淆<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-keep class butterknife.** &#123; *; &#125;  </span><br><span class="line">-dontwarn butterknife.internal.**  </span><br><span class="line">-keep class **$$ViewBinder &#123; *; &#125;  </span><br><span class="line">  </span><br><span class="line">-keepclasseswithmembernames class * &#123;  </span><br><span class="line">    @butterknife.* &lt;fields&gt;;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">-keepclasseswithmembernames class * &#123;  </span><br><span class="line">    @butterknife.* &lt;methods&gt;;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/23/ButterKnife/">ButterKnife</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Codexu</a></p>
+        <p><span>发布时间:</span>2018-05-23, 22:36:03</p>
+        <p><span>最后更新:</span>2018-05-24, 00:00:15</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/23/ButterKnife/" title="ButterKnife">http://yoursite.com/2018/05/23/ButterKnife/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/05/23/ButterKnife/　　作者: Codexu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/05/23/Kotlin语法/">
+                    Kotlin语法
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-点击事件绑定"><span class="toc-number">1.</span> <span class="toc-text">7.点击事件绑定</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"ButterKnife　| Codexu　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/05/23/Kotlin语法/" title="下一篇: Kotlin语法">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/23/ButterKnife/">ButterKnife</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/23/Kotlin语法/">Kotlin语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/22/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018 Codexu
+            </div>
+            <div class="footer-right">
+                Theme by CODEXU <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script type="text/javascript" src="/js/canvas-nestmin.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+    
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+  <script type="text/javascript" src="/js/love.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
