@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>前言</title>
+      <link href="/2018/05/24/forward/"/>
+      <url>/2018/05/24/forward/</url>
+      <content type="html"><![CDATA[<p>由于之前的博客几乎都在简书，虽然也是md，但是内容格式有所区别，还是以后慢慢移吧</p><a id="more"></a>]]></content>
+      
+      
+        <tags>
+            
+            <tag> 前言 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>ButterKnife</title>
       <link href="/2018/05/23/ButterKnife/"/>
       <url>/2018/05/23/ButterKnife/</url>
