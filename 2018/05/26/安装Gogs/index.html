@@ -15,17 +15,21 @@
 
 
 
-<meta name="description" content="Codexu&apos;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://blog.codexu.xin/tags/index.html">
+<meta name="description" content="github估计大家少不了熟悉吧，但如果想自己搭个git托管网站呢？喔，不要慌，这里有个现成简易的框架：gogs，效果不错，且可以自定义加很多功能">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装git服务器">
+<meta property="og:url" content="https://blog.codexu.xin/2018/05/26/安装Gogs/index.html">
 <meta property="og:site_name" content="Codexu">
-<meta property="og:description" content="Codexu&apos;s blog">
+<meta property="og:description" content="github估计大家少不了熟悉吧，但如果想自己搭个git托管网站呢？喔，不要慌，这里有个现成简易的框架：gogs，效果不错，且可以自定义加很多功能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T14:34:36.207Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2960353-de2ad3ddb32cfd4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2960353-abbdc91a9839b7dd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-26T06:53:11.471Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="Codexu&apos;s blog">
+<meta name="twitter:title" content="安装git服务器">
+<meta name="twitter:description" content="github估计大家少不了熟悉吧，但如果想自己搭个git托管网站呢？喔，不要慌，这里有个现成简易的框架：gogs，效果不错，且可以自定义加很多功能">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2960353-de2ad3ddb32cfd4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>tags | Codexu</title>
+<title>安装git服务器 | Codexu</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -67,7 +71,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -269,11 +273,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-安装Gogs" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2018-05-23T14:34:36.000Z" itemprop="datePublished">2018-05-23</time>
+      <a href="/2018/05/26/安装Gogs/" class="article-date">
+      <time datetime="2018-05-26T03:08:56.000Z" itemprop="datePublished">2018-05-26</time>
 </a>
 
 
@@ -288,7 +292,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      安装git服务器
     </h1>
   
 
@@ -298,6 +302,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -305,96 +313,87 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
+        <p>github估计大家少不了熟悉吧，但如果想自己搭个git托管网站呢？喔，不要慌，这里有个现成简易的框架：gogs，效果不错，且可以自定义加很多功能<br><a id="more"></a></p>
+<p>本文主要简单介绍安装的过程，因为如果只是搭建使用，那过程其实还是蛮简单的，搞几步命令和页面内的配置就能实现。这里也是给自己做个记录吧，备忘</p>
+<h2 id="配置CentOS-6-0-第三方yum源"><a href="#配置CentOS-6-0-第三方yum源" class="headerlink" title="配置CentOS 6.0 第三方yum源"></a>配置CentOS 6.0 第三方yum源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.atomicorp.com/installers/atomic</span><br><span class="line">sh ./atomic</span><br><span class="line">yum check-update</span><br></pre></td></tr></table></figure>
+<h2 id="开发库文件"><a href="#开发库文件" class="headerlink" title="开发库文件"></a>开发库文件</h2><blockquote>
+<p>一次性把多个库都装了，简单暴力，不用花太多精力，看报错一个个更新下载，这个也是我参照网上以及自己安装报错整合的一些库名</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install ntp make openssl openssl-devel pcre pcre-devel libpng libpng-devel libjpeg-6b libjpeg-devel-6b freetype freetype-devel gd gd-devel zlib zlib-devel gcc gcc-c++ libXpm libXpm-devel ncurses ncurses-devel libmcrypt libmcrypt-devel libxml2 libxml2-devel imake autoconf automake screen sysstat compat-libstdc++-33 curl curl-devel</span><br></pre></td></tr></table></figure>
+<h2 id="nginx-amp-mysql"><a href="#nginx-amp-mysql" class="headerlink" title="nginx &amp; mysql"></a>nginx &amp; mysql</h2><p>基本环境安装，数据库肯定也不用说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum install nginx</span><br><span class="line">service nginx start</span><br><span class="line">chkconfig --levels 235 nginx on</span><br><span class="line"></span><br><span class="line">yum install mysql mysql-server mysql-devel</span><br><span class="line">service mysqld start</span><br><span class="line">chkconfig --levels 235 mysqld on</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>数据库用户<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select user,host,password from mysql.user;</span><br><span class="line">drop user &apos;&apos;@localhost;</span><br><span class="line">update mysql.user set password = PASSWORD(&apos;xxxxxxx&apos;) where user=&apos;root&apos;;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>获取gogs安装包可能会报错，用<code>--no-check-certificate</code>强制下载即可</p>
+<p>Error<br>–2017-07-30 12:27:30–  <a href="https://dl.gogs.io/0.11.19/linux_amd64.tar.gz">https://dl.gogs.io/0.11.19/linux_amd64.tar.gz</a><br>Resolving dl.gogs.io… 138.68.27.161<br>Connecting to dl.gogs.io|138.68.27.161|:443… connected.<br>ERROR: certificate common name “gogs.io” doesn’t match requested host name “dl.gogs.io”.<br>To connect to dl.gogs.io insecurely, use ‘–no-check-certificate’.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://dl.gogs.io/0.11.19/linux_amd64.zip</span><br></pre></td></tr></table></figure></p>
+<h2 id="Mysql-用户"><a href="#Mysql-用户" class="headerlink" title="Mysql 用户"></a>Mysql 用户</h2><p>用户信息设置转到Gogs页面手动设置即可，如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2960353-de2ad3ddb32cfd4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="修改Gogs配置"><a href="#修改Gogs配置" class="headerlink" title="修改Gogs配置"></a>修改Gogs配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi gogs/custom/conf/app.ini</span><br></pre></td></tr></table></figure>
+<h2 id="切换后启动服务（在gogs目录下操作）"><a href="#切换后启动服务（在gogs目录下操作）" class="headerlink" title="切换后启动服务（在gogs目录下操作）"></a>切换后启动服务（在gogs目录下操作）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$nohup ./gogs web &amp;</span><br></pre></td></tr></table></figure>
+<p>然后就ok了，关闭putty不影响服务<br>关于重启，需要先结束gogs进程，gogs默认端口位3000，查询端口进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$lsof -i:3000</span><br></pre></td></tr></table></figure></p>
+<p>然后杀死进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$kill -9 pid</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2960353-abbdc91a9839b7dd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="自动草稿"><br>例如查询到的pid为20833，则执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$kill -9 20833</span><br></pre></td></tr></table></figure></p>
 
-
-    <!-- Tag Cloud Page -->
-    <hr>
-<br>
-<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">3</span></li></ul>
-
-<p class="count"></p>
-
-<div class="tags">
-    <a href="/tags/Android/" style="font-size: 35px; color: #000">Android</a> <a href="/tags/Git/" style="font-size: 16px; color: #808080">Git</a> <a href="/tags/Kotlin/" style="font-size: 16px; color: #808080">Kotlin</a> <a href="/tags/framwork/" style="font-size: 16px; color: #808080">framwork</a> <a href="/tags/tools/" style="font-size: 16px; color: #808080">tools</a> <a href="/tags/前言/" style="font-size: 16px; color: #808080">前言</a>
-</div>
-<style>
-    .category-list li{
-        display: inline-block;
-        margin: 0 1em .5em 0;
-        padding: 4px;
-        border: 1px solid lightgray;
-        font-size: 1.2rem;
-    }
-    .category-list a { color: gray; }
-    .category-list-item:hover a {
-        color: gray;
-        text-decoration: none;
-    }
-    .category-list-count {
-        margin-left: 2px;
-        font-size: .9rem;
-    }
-    .article-entry ul li:before{ display: none; }
-    .article-inner { text-align: center; }
-    .tags {
-        max-width: 42em;
-        margin: 2em auto;
-        margin-top: 0em;
-    }
-    .tags a {
-        margin-right: 1em;
-        line-height: 65px;
-        border-bottom: 1px solid gray;
-        white-space: nowrap;
-        transition: border-bottom .5s;
-    }
-    .tags a:hover {
-        border-bottom: 3px dotted gray;
-        text-decoration: none;
-    }
-    #count > span {
-        margin: auto .2em;
-        font-weight: bold;
-    }
-</style>
-
-<!-- Count tags and categories -->
-<p id="count">
-        已有<span><script>document.write($(".category-list-item").length)</script></span>个分类，
-        共计<span><script>document.write($(".tags > a").length)</script></span>个标签
-</p>
-<script>
-    $('#count').appendTo('.count');
-</script>
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/26/安装Gogs/">安装git服务器</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Codexu</a></p>
+        <p><span>发布时间:</span>2018-05-26, 11:08:56</p>
+        <p><span>最后更新:</span>2018-05-26, 14:53:11</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/26/安装Gogs/" title="安装git服务器">https://blog.codexu.xin/2018/05/26/安装Gogs/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.codexu.xin/2018/05/26/安装Gogs/　　作者: Codexu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/05/26/添加资源到framework层/">
+                    添加资源到framework层
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置CentOS-6-0-第三方yum源"><span class="toc-number">1.</span> <span class="toc-text">配置CentOS 6.0 第三方yum源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发库文件"><span class="toc-number">2.</span> <span class="toc-text">开发库文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-amp-mysql"><span class="toc-number">3.</span> <span class="toc-text">nginx &amp; mysql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql-用户"><span class="toc-number">4.</span> <span class="toc-text">Mysql 用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改Gogs配置"><span class="toc-number">5.</span> <span class="toc-text">修改Gogs配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切换后启动服务（在gogs目录下操作）"><span class="toc-number">6.</span> <span class="toc-text">切换后启动服务（在gogs目录下操作）</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -412,7 +411,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"tags　| Codexu　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"安装git服务器　| Codexu　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -449,6 +448,24 @@
 
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/05/26/添加资源到framework层/" title="下一篇: 添加资源到framework层">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/安装Gogs/">安装git服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/添加资源到framework层/">添加资源到framework层</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/24/forward/">前言</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/23/ButterKnife/">ButterKnife</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/23/Kotlin语法/">Kotlin语法</a></li></ul>
 
 
 
