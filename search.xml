@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>啦啦啦啦</title>
+      <link href="/2018/06/01/ssr/"/>
+      <url>/2018/06/01/ssr/</url>
+      <content type="html"><![CDATA[<h2 id="6月1日更新"><a href="#6月1日更新" class="headerlink" title="6月1日更新"></a>6月1日更新</h2><a id="more"></a><div align="center"> <img src="/img/06011.png"> </div><br><div align="center"> <img src="/img/06012.png"> </div><div id="music163player" align="center"><br>            <iframe auto=1 frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=330 src="//music.163.com/outchain/player?type=0&id=2238443962&auto=1&height=430"></iframe><br></div>]]></content>
+      
+      
+        <tags>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>安装git服务器</title>
       <link href="/2018/05/26/%E5%AE%89%E8%A3%85Gogs/"/>
       <url>/2018/05/26/%E5%AE%89%E8%A3%85Gogs/</url>
