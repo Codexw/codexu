@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Codexu" />
+
+
+
+<meta name="description" content="系统中几种存储数据的理解:   要了解具体实现.  存在的原因, 适用的范围. 也就是想清楚  为什么要设计这个存储方式, 有什么用, 怎么用等。 要在eng 手机上， 能用adb 或者monitor等工具查看这些数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手机系统数据存储相关">
+<meta property="og:url" content="https://blog.codexu.xin/2018/06/16/手机系统数据存储相关/index.html">
+<meta property="og:site_name" content="Codexu">
+<meta property="og:description" content="系统中几种存储数据的理解:   要了解具体实现.  存在的原因, 适用的范围. 也就是想清楚  为什么要设计这个存储方式, 有什么用, 怎么用等。 要在eng 手机上， 能用adb 或者monitor等工具查看这些数据。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-16T16:05:05.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手机系统数据存储相关">
+<meta name="twitter:description" content="系统中几种存储数据的理解:   要了解具体实现.  存在的原因, 适用的范围. 也就是想清楚  为什么要设计这个存储方式, 有什么用, 怎么用等。 要在eng 手机上， 能用adb 或者monitor等工具查看这些数据。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Codexu" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>手机系统数据存储相关 | Codexu</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?46a3582ba0f5448769307da255f924a5";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Codexu</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/404.html" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="/404.html" title="GitHub"></a>
+                            
+                                <a class="fa QQ" href="/404.html" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apk/">Apk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framwork/">framwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前言/">前言</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://blog.codexu.xin">Codexu</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱技术，爱自由，爱生活</div>
+                </section>
+                
+            </div>
+        </div>
+
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Codexu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Codexu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/404.html" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="/404.html" title="GitHub"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/404.html" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-手机系统数据存储相关" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/16/手机系统数据存储相关/" class="article-date">
+      <time datetime="2018-06-16T15:58:23.000Z" itemprop="datePublished">2018-06-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      手机系统数据存储相关
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>系统中几种存储数据的理解: </p>
+<ol>
+<li>要了解具体实现.  存在的原因, 适用的范围. 也就是想清楚  为什么要设计这个存储方式, 有什么用, 怎么用等。</li>
+<li>要在eng 手机上， 能用adb 或者monitor等工具查看这些数据。<a id="more"></a>
+<h2 id="常遇到的数据存储"><a href="#常遇到的数据存储" class="headerlink" title="常遇到的数据存储"></a>常遇到的数据存储</h2></li>
+</ol>
+<h3 id="share-preference"><a href="#share-preference" class="headerlink" title="share preference"></a>share preference</h3><p>应用内部的数据存储. 但有模式.<br>数据在 系统/data/data/下个apk 的 shared_prefs 目录下. 为xml文件 </p>
+<h3 id="app-database"><a href="#app-database" class="headerlink" title="app database"></a>app database</h3><p>应用内部的数据存储. 但有模式.<br>数据在 系统/data/data/下个apk 的 databases 目录下. 为数据库文件, sqlite .     </p>
+<h3 id="system-settings"><a href="#system-settings" class="headerlink" title="system settings"></a>system settings</h3><p>系统设置数据. 各程序通过系统接口可以访问, android 内部用<br>android.provider.Settings.getXXX(…)<br>android.provider.Settings.setXXX(…)<br>具体查看android.provider.Settings 的实现<br>数据在 系统/data/data/com.android.providers.settings/databases 目录下. 为数据库文件, sqlite . </p>
+<p>和单独app开发不一样, 系统相关的修改经常会使用这个,特别是一些默认值.<br>这个默认值在 \alps\frameworks\base\packages\SettingsProvider 里面处理.<br>第一次开机的时候, 负责初始化数据库 </p>
+<h3 id="system-properties"><a href="#system-properties" class="headerlink" title="system properties"></a>system properties</h3><p>系统属性数据. 一般是 android 和 其他部分通讯, 例如驱动, 一些固定的开关<br>通过android java端 android.os.SystemProperties 里面的get set 接口处理<br>ro.xxx 这种类型是只读的 来源是 /system/build.prop /root/default.prop 以及一些系统运行时设置的值<br>persisit.xxx 这种是一些可设置的值, 关机时是保存在 /data/property 里面 </p>
+<p>系统service 实现在 alps\system\core\init\property_service.c/h 里面.</p>
+<hr>
+<h2 id="Android-SystemProperties简介"><a href="#Android-SystemProperties简介" class="headerlink" title="Android SystemProperties简介"></a><a href="http://www.cnblogs.com/hoji-real/articles/2362532.html">Android SystemProperties简介</a></h2><p>介绍了设置属性需要的权限，已经设置权限的方法。</p>
+<p>Systemproperties类在android.os下，但这个类是隐藏的，上层程序开发无法直接使用。其实用java的反射机制是可以使用这个类。何谓java反射机制，请自行研究学习，在此不做介绍，放到后续文章中。用JNI的方式，可以绕过Systemproperties这个类，直接本地调用来实现创建、获取及修改系统属性。在此也不做介绍，也放到后续文章中。</p>
+<p>这篇文章主要介绍android系统属性的命名方式：<br>创建与修改android属性用Systemproperties.set(name, value)，获取android属性用Systemproperties.get(name)，需要注意的是android属性的名称是有一定的格式要求的，如下：前缀必须用system\core\init\property_service.c中定义的前缀，进行系统属性设置的程序也必须有system或root权限，<br>如何将android程序的权限提升到system权限？方法是这样的：<br>1、在AndroidManifest.xml中，在manifest加入android:sharedUserId=”android.uid.system”。<br>2、在Android.mk中，將LOCAL_CERTIFICATE := XXX修改成LOCAL_CERTIFICATE :=platform。</p>
+<h2 id="Android-的系统属性-SystemProperties-设置分析"><a href="#Android-的系统属性-SystemProperties-设置分析" class="headerlink" title="Android 的系统属性(SystemProperties)设置分析"></a><a href="http://www.blogjava.net/anymobile/articles/301989.html">Android 的系统属性(SystemProperties)设置分析</a></h2><p>介绍了取得、设置系统权限的流程。<br>Android 的系统属性包括两部分：文件保存的持久属性和每次开机导入的cache属性。前者主要保存在下面几个文件中：bionic/libc/include/sys/_system_properties.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define PROP_SERVICE_NAME &quot;property_service&quot;</span><br><span class="line">#define PROP_PATH_RAMDISK_DEFAULT  &quot;/default.prop&quot;</span><br><span class="line"> #define PROP_PATH_SYSTEM_BUILD     &quot;/system/build.prop&quot;</span><br><span class="line">#define PROP_PATH_SYSTEM_DEFAULT   &quot;/system/default.prop&quot;</span><br><span class="line"> #define PROP_PATH_LOCAL_OVERRIDE   &quot;/data/local.prop&quot;</span><br></pre></td></tr></table></figure></p>
+<p>后者则通过frameworks/base/core/java/android/os/SystemProperties.java的接口定义，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title">native_get</span><span class="params">(String key)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title">native_get</span><span class="params">(String key, String def)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">native_set</span><span class="params">(String key, String def)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String val)</span> </span>&#123; </span><br><span class="line"><span class="keyword">if</span> (key.length() &gt; PROP_NAME_MAX) &#123; </span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"key.length &gt; "</span> + PROP_NAME_MAX); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">if</span> (val != <span class="keyword">null</span> &amp;&amp; val.length() &gt; PROP_VALUE_MAX) &#123; </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"val.length &gt; "</span> +</span><br><span class="line">              PROP_VALUE_MAX);</span><br><span class="line">&#125;</span><br><span class="line">      native_set(key, val);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><br>该接口类在初始化运行环境中注册对应的cpp接口android_os_SystemProperties.cpp，实际操作通过JNI调用的是cpp文件对应的接口：frameworks/base/core/jni/AndroidRuntime.cpp<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namespace android &#123;</span><br><span class="line">     extern int register_android_os_SystemProperties(JNIEnv *env);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>frameworks/base/core/jni/android_os_SystemProperties.cpp<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SystemProperties_set</span><span class="params">(JNIEnv *env, jobject clazz, jstring keyJ, jstring valJ)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">       <span class="keyword">int</span> err; </span><br><span class="line">       <span class="keyword">const</span> <span class="keyword">char</span>* key; </span><br><span class="line">       <span class="keyword">const</span> <span class="keyword">char</span>* val; </span><br><span class="line">       key = env&gt;GetStringUTFChars(keyJ, <span class="literal">NULL</span>); </span><br><span class="line">       <span class="keyword">if</span> (valJ == <span class="literal">NULL</span>) &#123; </span><br><span class="line">            val = <span class="string">""</span>;       <span class="comment">/* NULL pointer not allowed here */</span> </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            val = env&gt;GetStringUTFChars(valJ, <span class="literal">NULL</span>);</span><br><span class="line">        &#125;</span><br><span class="line">         err = property_set(key, val);</span><br><span class="line">         env-&gt;ReleaseStringUTFChars(keyJ, key);        </span><br><span class="line">         <span class="keyword">if</span> (valJ != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            env-&gt;ReleaseStringUTFChars(valJ, val);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>设置key的value时，需要作鉴权，根据设置程序所在进程的fd获知uid值，比如system server进程可以设置net打头的key，不可以设置gsm打头的key，相关的定义如下：system/core/include/private/android_filesystem_config.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#define AID_ROOT             </span><br><span class="line"> /* traditional unix root user */</span><br><span class="line"> #define AID_SYSTEM        1000  /* system server */</span><br><span class="line">#define AID_RADIO         1001  /* telephony subsystem, RIL */</span><br><span class="line"> #define AID_DHCP          1014  /* dhcp client */</span><br><span class="line">#define AID_SHELL         2000  /* adb and debug shell user */</span><br><span class="line">#define AID_CACHE         2001  /* cache access */</span><br><span class="line">#define AID_APP          10000 /* first app user */</span><br></pre></td></tr></table></figure></p>
+<p>system/core/init/property_service.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PERSISTENT_PROPERTY_DIR  <span class="meta-string">"/data/property"</span> </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span> </span><br><span class="line">         <span class="keyword">const</span> <span class="keyword">char</span> *prefix; </span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> uid; </span><br><span class="line">    &#125; property_perms[] = &#123;</span><br><span class="line">         &#123; <span class="string">"net.rmnet0."</span>,    AID_RADIO &#125;, </span><br><span class="line">        &#123; <span class="string">"net.gprs."</span>,      AID_RADIO &#125;, </span><br><span class="line">         &#123; <span class="string">"ril."</span>,           AID_RADIO &#125;,</span><br><span class="line">         &#123; <span class="string">"gsm."</span>,           AID_RADIO &#125;,</span><br><span class="line">         &#123; <span class="string">"net.dns"</span>,        AID_RADIO &#125;,</span><br><span class="line">         &#123; <span class="string">"net.usb0"</span>,       AID_RADIO &#125;,</span><br><span class="line">         &#123; <span class="string">"net."</span>,           AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"dev."</span>,           AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"runtime."</span>,       AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"hw."</span>,            AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"sys."</span>,        AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"service."</span>,    AID_SYSTEM &#125;,</span><br><span class="line">        &#123; <span class="string">"wlan."</span>,        AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"dhcp."</span>,        AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"dhcp."</span>,        AID_DHCP &#125;,</span><br><span class="line">         &#123; <span class="string">"debug."</span>,        AID_SHELL &#125;,</span><br><span class="line">         &#123; <span class="string">"log."</span>,        AID_SHELL &#125;,</span><br><span class="line">         &#123; <span class="string">"service.adb.root"</span>,    AID_SHELL &#125;,</span><br><span class="line">         &#123; <span class="string">"persist.sys."</span>,    AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="string">"persist.service."</span>,   AID_SYSTEM &#125;,</span><br><span class="line">         &#123; <span class="literal">NULL</span>, <span class="number">0</span> &#125;</span><br><span class="line">     &#125;;</span><br><span class="line">     <span class="function"><span class="keyword">int</span> <span class="title">property_set</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">const</span> <span class="keyword">char</span> *value)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         property_changed(name, value);</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">start_property_service</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         <span class="keyword">int</span> fd;</span><br><span class="line">         load_properties_from_file(PROP_PATH_SYSTEM_BUILD);</span><br><span class="line">         load_properties_from_file(PROP_PATH_SYSTEM_DEFAULT);</span><br><span class="line">         load_properties_from_file(PROP_PATH_LOCAL_OVERRIDE);</span><br><span class="line">         <span class="comment">/* Read persistent properties after all default values have been loaded. */</span></span><br><span class="line">         load_persistent_properties();</span><br><span class="line">         fd = create_socket(PROP_SERVICE_NAME, SOCK_STREAM, <span class="number">0666</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">         <span class="keyword">if</span>(fd &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        fcntl(fd, F_SETFD, FD_CLOEXEC);</span><br><span class="line">         fcntl(fd, F_SETFL, O_NONBLOCK);</span><br><span class="line">         listen(fd, <span class="number">8</span>);</span><br><span class="line">         <span class="keyword">return</span> fd;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">handle_property_set_fd</span><span class="params">(<span class="keyword">int</span> fd)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         <span class="keyword">switch</span>(msg.cmd) &#123;</span><br><span class="line">         <span class="keyword">case</span> PROP_MSG_SETPROP:</span><br><span class="line">             msg.name[PROP_NAME_MAX<span class="number">-1</span>] = <span class="number">0</span>;</span><br><span class="line">             msg.value[PROP_VALUE_MAX1] = <span class="number">0</span>;</span><br><span class="line">             <span class="keyword">if</span>(<span class="built_in">memcmp</span>(msg.name,<span class="string">"ctl."</span>,<span class="number">4</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (check_control_perms(msg.value, cr.uid)) &#123;</span><br><span class="line">                     handle_control_message((<span class="keyword">char</span>*) msg.name + <span class="number">4</span>, (<span class="keyword">char</span>*) msg.value);</span><br><span class="line">                 &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     ERROR(<span class="string">"sys_prop: Unable to %s service ctl [%s] uid: %d pid:%d\n"</span>,</span><br><span class="line">                             msg.name + <span class="number">4</span>, msg.value, cr.uid, cr.pid);</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                 <span class="keyword">if</span> (check_perms(msg.name, cr.uid)) &#123;</span><br><span class="line">                     property_set((<span class="keyword">char</span>*) msg.name, (<span class="keyword">char</span>*) msg.value);</span><br><span class="line">                 &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ERROR(<span class="string">"sys_prop: permission denied uid:%d  name:%s\n"</span>,</span><br><span class="line">                          cr.uid, msg.name);</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">         <span class="keyword">default</span>:</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure><br>在开机启动后的init操作中，会执行一个loop循环，当检测到有新的设置时，进入设置流程，鉴权失败会提示相关的异常，如sys_prop: permission denied uid:1000  name:gsm.phone.idsystem/core/init/init.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">property_changed</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">const</span> <span class="keyword">char</span> *value)</span> </span></span><br><span class="line"><span class="function">     </span>&#123; </span><br><span class="line">         <span class="keyword">if</span> (property_triggers_enabled) &#123; </span><br><span class="line">             queue_property_triggers(name, value); </span><br><span class="line">             drain_action_queue(); </span><br><span class="line">         &#125; </span><br><span class="line">     &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">        parse_config_file(<span class="string">"/init.rc"</span>);</span><br><span class="line">         qemu_init();</span><br><span class="line">        device_fd = device_init();</span><br><span class="line">         property_init();</span><br><span class="line">         fd = open(console_name, O_RDWR);</span><br><span class="line">        property_set_fd = start_property_service();</span><br><span class="line">         ufds[<span class="number">0</span>].fd = device_fd;</span><br><span class="line">         ufds[<span class="number">0</span>].events = POLLIN;</span><br><span class="line">         ufds[<span class="number">1</span>].fd = property_set_fd;</span><br><span class="line">         ufds[<span class="number">1</span>].events = POLLIN;</span><br><span class="line">        ufds[<span class="number">2</span>].fd = signal_recv_fd;</span><br><span class="line">         ufds[<span class="number">2</span>].events = POLLIN;</span><br><span class="line">         fd_count = <span class="number">3</span>;</span><br><span class="line">         <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">           <span class="keyword">if</span> (ufds[<span class="number">0</span>].revents == POLLIN)</span><br><span class="line">                 handle_device_fd(device_fd);</span><br><span class="line">             <span class="keyword">if</span> (ufds[<span class="number">1</span>].revents == POLLIN)</span><br><span class="line">                 handle_property_set_fd(property_set_fd);</span><br><span class="line">             <span class="keyword">if</span> (ufds[<span class="number">3</span>].revents == POLLIN)</span><br><span class="line">                 handle_keychord(keychord_fd);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Android属性系统"><a href="#Android属性系统" class="headerlink" title="Android属性系统"></a><a href="http://www.blogjava.net/MEYE/articles/359773.html">Android属性系统</a></h2><p>属性前缀的作用:<br>通常，属性都带有前缀，如ro.config、persist.xxx等。<br>对于ro前缀，只读属性，即第一次设置之后，以后都不能再改变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(pi != 0) &#123;</span><br><span class="line">        /* ro.* properties may NEVER be modified once set */</span><br><span class="line">        if(!strncmp(name, &quot;ro.&quot;, 3)) return -1;</span><br></pre></td></tr></table></figure></p>
+<p>  persist前缀属性在初始加载属性时须注意，default属性未加载完成时，不能将其写入文件中，以免覆盖文件中的属性值。<br>  对于persist前缀，在设置属性的同时，还会将其写到/data/property/persist.xxx文件中，在系统重启时，将该属性值恢复到上机关机时的状态。那么什么时候加载的这些persist属性？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">on property:vold.decrypt=trigger_load_persist_props</span><br><span class="line">    load_persist_props</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void load_persist_props(void)</span><br><span class="line">&#123;</span><br><span class="line">    load_override_properties();</span><br><span class="line">    /* Read persistent properties after all default values have been loaded. */</span><br><span class="line">    load_persistent_properties();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加载时机要控制好，一是在默认属性都加载完成后;二是等data分区挂载好之后，毕竟persist属性存储在data分区中。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/16/手机系统数据存储相关/">手机系统数据存储相关</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Codexu</a></p>
+        <p><span>发布时间:</span>2018-06-16, 23:58:23</p>
+        <p><span>最后更新:</span>2018-06-17, 00:05:05</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/16/手机系统数据存储相关/" title="手机系统数据存储相关">https://blog.codexu.xin/2018/06/16/手机系统数据存储相关/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.codexu.xin/2018/06/16/手机系统数据存储相关/　　作者: Codexu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/06/17/ssr/">
+                    啦啦啦啦
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/16/Apk-decompile/">
+                    Android反编译
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常遇到的数据存储"><span class="toc-number">1.</span> <span class="toc-text">常遇到的数据存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#share-preference"><span class="toc-number">1.1.</span> <span class="toc-text">share preference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-database"><span class="toc-number">1.2.</span> <span class="toc-text">app database</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#system-settings"><span class="toc-number">1.3.</span> <span class="toc-text">system settings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#system-properties"><span class="toc-number">1.4.</span> <span class="toc-text">system properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-SystemProperties简介"><span class="toc-number">2.</span> <span class="toc-text">Android SystemProperties简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-的系统属性-SystemProperties-设置分析"><span class="toc-number">3.</span> <span class="toc-text">Android 的系统属性(SystemProperties)设置分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android属性系统"><span class="toc-number">4.</span> <span class="toc-text">Android属性系统</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <!-- <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a> -->
+            <!-- <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a> -->
+            <!-- <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> -->
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"手机系统数据存储相关　| Codexu　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="livere" id="comments">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjczNC8xMzI2OQ=="  style=" margin:40px ">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/06/17/ssr/" title="上一篇: 啦啦啦啦">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/16/Apk-decompile/" title="下一篇: Android反编译">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/17/ssr/">啦啦啦啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/16/手机系统数据存储相关/">手机系统数据存储相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/16/Apk-decompile/">Android反编译</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/16/Android-JNI/">Android JNI入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/安装Gogs/">安装git服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/添加资源到framework层/">添加资源到framework层</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/24/forward/">前言</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/23/ButterKnife/">ButterKnife</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018 Codexu
+            </div>
+            <div class="footer-right">
+                Theme by CODEXU <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script type="text/javascript" src="/js/canvas-nestmin.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+    
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏起来啦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你抓到啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+  <script type="text/javascript" src="/js/love.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":0.5,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@latest/assets/haruto.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":40,"vOffset":-15},"react":{"opacityDefault":0.5,"opacityOnHover":0.2},"mobile":{"show":false},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
